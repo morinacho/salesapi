@@ -1,0 +1,2 @@
+node_modules
+.envecho "# salesapi" >> README.md
