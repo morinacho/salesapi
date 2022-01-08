@@ -8,12 +8,12 @@ module.exports.Database = (colletion) => new Promise( async (resolve, reject) =>
     try {
         if(!connection){
             const client = new MongoClient(Config.mongoUri)
-            let connection = await client.connect()
+            connection = await client.connect()
             debug('New connecttion: MongoDB Atlas')
         }
         debug("Reusing connection")
         const db = connection.db(Config.mongoDbname)
-        resolve(db.colletion(colletion))
+        resolve(db.collection(colletion))
     } catch (error) {
         reject(error)
     }
