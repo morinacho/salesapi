@@ -1,6 +1,7 @@
-const {Database} = require('../database/index')
-const {ObjectId} = require('mongodb')
-const COLLECTION = 'products'
+const {ObjectId}      = require('mongodb')
+const {Database}      = require('../database/index')
+const {ProductsUtils} = require('./utils')
+const COLLECTION      = 'products'
 
 const getAll = async () => {
     const collection = await Database(COLLECTION)
@@ -14,11 +15,17 @@ const getById = async (id) => {
 
 const create = async (product) =>{
     const collection = await Database(COLLECTION)
-    let result = await collection.inhsertOne(product)
+    let result = await collection.insertOne(product)
     return result.insertedId
+}
+
+const generateReport = async (name, res) => {
+    let products = await getAll()
+    ProductsUtils.excelGenerator(products, name, res)
 }
 module.exports.ProductsService = {
     getAll,
     getById,
-    create
+    create,
+    generateReport,
 }
